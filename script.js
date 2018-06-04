@@ -1,21 +1,27 @@
 $(function() {
-  console.log('jquery loaded');
-  $('#submit').on('click', function() {
-    toggleSubmitForm();
-  });
+  $('#submitText').on('click', toggleSubmitForm);
+  $('.container').on('submit', '#submitForm', addNewLink);
 });
 
 function toggleSubmitForm() {
   if ($('.form').length > 0) {
     $('.form').remove();
   } else {
-    let $submitForm = $('<div class="form"><form action="#"></form></div>');
+    let $formDiv = $('<div class="form"></div>');
+    let $submitForm = $('<form id="submitForm"></form>');
     $submitForm.append(constructFormInputDiv('title'));
     $submitForm.append(constructFormInputDiv('url'));
     $submitForm.append(
-      `<div><button id="submitBtn" type="submit">submit</button></div>`
+      `<div><input id="submitBtn" type="submit"></input></div>`
     );
-    $('#navbar').after($submitForm);
+    $formDiv.append($submitForm);
+
+    $('#navbar').after($formDiv);
+
+    // $('#submitForm').on('submit', function(event) {
+    //   addNewLink();
+    //   event.preventDefault();
+    // });
   }
 }
 
@@ -24,4 +30,16 @@ function constructFormInputDiv(id) {
   $div.append(`<label for="${id}">${id}: `);
   $div.append(`<input type="text" id="${id}"></input>`);
   return $div;
+}
+
+function addNewLink() {
+  //pull data from form
+  let title = $('#title').val();
+  let url = $('#url').val();
+
+  //append to list
+  let $newLink = $(
+    `<li class="link-row"><i class="far fa-star"></i>${title}<span class="link">${url}</span></li>`
+  );
+  $('#links').append($newLink);
 }
