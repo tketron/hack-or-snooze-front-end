@@ -17,17 +17,16 @@ h1 {
   padding-right: 0.7em;
 }
 
-#submitText {
+#submitText,
+#favoritesText {
   cursor: pointer;
 }
 
 .form {
   width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-left: 2em;
+  padding-left: 4em;
   padding-top: 1em;
+  display: none;
 }
 
 .form-row {
