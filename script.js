@@ -11,7 +11,7 @@ $(function() {
     addNewLink();
   });
 
-  $('.star').on('click', toggleFavoriteIcon);
+  $('ol').on('click', '.star', toggleFavoriteIcon);
 });
 
 function addNewLink() {
@@ -25,8 +25,6 @@ function addNewLink() {
   );
   $('#links').append($newLink);
   $links = $('.link-row');
-
-  $('.star').on('click', toggleFavoriteIcon);
 
   //clear form
   $('#title').val('');
@@ -47,7 +45,7 @@ function toggleFavorites() {
     $('#links').empty();
     $('#links').append($favorites);
     $('#favoritesText').text('all');
-  } else {}
+  } else {
     $('#links').empty();
     $('#links').append($links);
     $('#favoritesText').text('favorites');
