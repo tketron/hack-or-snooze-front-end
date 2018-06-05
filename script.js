@@ -12,6 +12,9 @@ $(function() {
   });
 
   $('ol').on('click', '.star', toggleFavoriteIcon);
+  $('ol').on('click', '.link', function(event) {
+    showHostnameLinks($(event.target).text());
+  });
 });
 
 function addNewLink() {
@@ -21,7 +24,7 @@ function addNewLink() {
 
   //append to list
   let $newLink = $(
-    `<li class="link-row"><i class="star far fa-star"></i><a href=${url}>${title}<span class="link">(${url})</span></a></li>`
+    `<li class="link-row"><i class="star far fa-star"></i><a href=${url}>${title}</a><span class="link">(${url})</span></li>`
   );
   $('#links').append($newLink);
   $links = $('.link-row');
@@ -50,5 +53,25 @@ function toggleFavorites() {
     $('#links').append($links);
     $('#favoritesText').text('favorites');
   }
+  $('#links').toggleClass('all favorites');
+}
+
+function showHostnameLinks(urlText) {
+  //strip leading and trailing parentheses
+  let strippedURLText = urlText.substring(1, urlText.length - 1);
+  let targetHostname = new URL(strippedURLText).hostname;
+
+  let $hostnameLinks = $('.link-row').filter(function(i, el) {
+    let linkURL = $(el)
+      .children('.link')
+      .text();
+    let strippedLinkURL = linkURL.substring(1, linkURL.length - 1);
+    let linkHostname = new URL(strippedLinkURL).hostname;
+    return linkHostname === targetHostname;
+  });
+
+  $('#links').empty();
+  $('#links').append($hostnameLinks);
+  $('#favoritesText').text('all');
   $('#links').toggleClass('all favorites');
 }
